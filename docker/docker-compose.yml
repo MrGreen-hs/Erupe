@@ -1,5 +1,5 @@
 version: "3.9"
-# 1. docker-compose up db pgadmin
+# 1. docker-compose up db pgadmin #
 # 2. Use pgadmin to restore db and also apply patch-schema
 # 3. Configure the config.json example. in docker you can point to the service name for the database i.e db
 # 4. In seperate terminal docker-compose up server
