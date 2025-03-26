@@ -416,8 +416,13 @@ func parseChatCommand(s *Session, command string) {
 					sendServerChatMessage(s, fmt.Sprintf("Usage: !%s <weapon_id>", commands["GetWeapon"].Prefix))
 					return
 				}
-				s.playerInfo.WeaponType = uint8(weaponID)
-				sendServerChatMessage(s, fmt.Sprintf("Weapon changed to ID %d", weaponID))
+
+				_, err = s.server.db.Exec("UPDATE characters SET weapon_type = $1 WHERE id = $2", weaponID, s.charID)
+				if err == nil {
+					sendServerChatMessage(s, fmt.Sprintf("Weapon changed to ID %d", weaponID))
+				} else {
+					sendServerChatMessage(s, "Failed to update weapon in database.")
+				}
 			} else {
 				sendServerChatMessage(s, fmt.Sprintf("Usage: !%s <weapon_id>", commands["GetWeapon"].Prefix))
 			}
